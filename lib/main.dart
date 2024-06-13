@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
               color: Colors.blueGrey,
             ),
             Text(
-              "KANTIN WISAGA",
+              "ADMIN KANTIN",
               style: TextStyle(
                 fontSize: size.width * 0.06,
                 fontWeight: FontWeight.bold,

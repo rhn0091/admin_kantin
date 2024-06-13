@@ -34,7 +34,7 @@ class _AddItemPageState extends State<Tambah> {
       try {
         var data = json.decode(response.body);
         if (data['status'] == "Success") {
-          _showMessageDialog("Success", "Item added successfully.");
+          _showMessageDialog("Success", "Berhasil Mengirim Barang.");
           setState(() {
             nama_barang.clear();
             harga.clear();

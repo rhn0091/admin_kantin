@@ -91,7 +91,7 @@ class _LoginPage extends State<LoginPage> {
                 padding: const EdgeInsets.all(10),
                 child: Center(
                   child: Text(
-                    "Kantin Wikrama",
+                    "HALO ADMIN",
                     style: TextStyle(fontSize: 30),
                   ),
                 ),
