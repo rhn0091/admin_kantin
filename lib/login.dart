@@ -1,15 +1,17 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 
 import 'package:admin/beranda.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
- import 'package:http/http.dart' as http;
+// import 'package:kantin_wk/admin.dart';
 // import 'package:kantin_wk/beranda.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MaterialApp(
       home: LoginPage(),
     ));
-   
 
 class LoginPage extends StatefulWidget {
   @override
@@ -22,36 +24,48 @@ class _LoginPage extends State<LoginPage> {
   TextEditingController NIP = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  Future<void> _login() async {
+  Future _login() async {
     print("\n=======|> memanggil fungsi _login() ");
 
-    var url = Uri.parse("http://localhost/rehan/login_admin.php"); // Use your machine's IP address
-    var response = await http.post(url, body: {"NIP": NIP.text, "password": password.text});
+    var url = Uri.http("localhost", "ukk_amri/login_admin.php", {'q': '{http}'});
+    var response = await http
+        .post(url, body: {"NIP": NIP.text,"password": password.text});
 
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      if (data['status'] == "Success") {
-        print("Data 'log in' ditemukan!\n");
-        setState(() {
-          NIP.clear();
-          password.clear();
-        });
+    var data = json.decode(response.body);
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage()
-          ),
-        );
-      } else {
-        print("Data tidak ada...\n" + data.toString());
+    if (data.toString() == "Success") {
+      print("Data 'log in' ditemukan!\n");
+      setState(() {
+        NIP.clear();
+        password.clear();
+      });
 
-        setState(() {
-          password.clear();
-        });
-      }
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) =>Beranda( listdata: {},),
+    //      )
+    // );
+    // }else if(data.toString()=="admin"){
+    //   print("admin\n");
+    //   setState(() {
+    //     NIP.clear();
+    //     password.clear();
+    //   });
+    
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
     } else {
-      print("Server error...");
+      print("Data tidak ada...\n" + data.toString());
+
+      setState(() {
+        password.clear();
+      });
     }
   }
 
@@ -64,9 +78,11 @@ class _LoginPage extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+          constraints:
+              BoxConstraints(minHeight: MediaQuery.of(context).size.height),
           width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(color: Color.fromARGB(255, 120, 194, 204)),
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(255, 120, 194, 204)),
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
@@ -105,6 +121,7 @@ class _LoginPage extends State<LoginPage> {
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.only(top: 20),
                 child: SizedBox(
+                  
                   height: 60,
                   width: double.infinity,
                   child: ElevatedButton(
@@ -112,7 +129,9 @@ class _LoginPage extends State<LoginPage> {
                       _login();
                     },
                     child: Text("Login"),
+                    
                   ),
+                  
                 ),
               ),
             ],
@@ -122,4 +141,3 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 }
-
